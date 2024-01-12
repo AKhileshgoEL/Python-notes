@@ -6,7 +6,6 @@ Strings are immutable sequences of Unicode code points.
 
 
 # len() : get the number of elements in a list
-<span style="color:red;">This is red text.</span>
 print("Length:", len(my_list))
 
 # append() : adds an element to the end of the list
@@ -19,6 +18,8 @@ print(my_list)
 # create list with repeated elements
 list_with_zeros = [0] * 5
 print(list_with_zeros)
+
+*****
 
 # convert string to list
 string_to_list = list('Hello')
@@ -34,7 +35,7 @@ list_copy.append(True)
 print(list_copy)
 print(list_org)
 
-# use copy(), or list(x) to actually copy the list
+# use copy(), or list(x) to actually copy the list          //called shallow copy or deep copy
 # slicing also works: list_copy = list_org[:]
 list_org = ["banana", "cherry", "apple"]
 
@@ -43,6 +44,32 @@ list_copy = list_org.copy()
 # list_copy = list_org[:]
 
 # now modifying the copy does not affect the original
-list_copy.append(True)
+list_copy.append(4)
 print(list_copy)
 print(list_org)
+
+*****
+A elegant and fast way to create a new list from an existing list.
+a = [1, 2, 3, 4, 5, 6, 7, 8]
+b = [i * i for i in a] # squares each element
+print(b)
+
+Nested lists¶
+Lists can contain other lists (or other container types).
+
+a = [[1, 2], [3, 4]]
+print(a)
+print(a[0])
+[[1, 2], [3, 4]]
+[1, 2]
+
+
+
+
+
+
+
+
+
+
+
