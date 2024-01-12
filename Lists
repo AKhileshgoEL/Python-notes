@@ -1,1 +1,48 @@
+List is a collection which is ordered and mutable. Allows duplicate members.
+Tuple is a collection which is ordered and immutable. Allows duplicate members.
+Set is a collection which is unordered and unindexed. No duplicate members.
+Dictionary is a collection which is unordered, mutable and indexed. No duplicate members.
+Strings are immutable sequences of Unicode code points.
 
+
+# len() : get the number of elements in a list
+<span style="color:red;">This is red text.</span>
+print("Length:", len(my_list))
+
+# append() : adds an element to the end of the list
+my_list.append("orange")
+
+# insert() : adds an element at the specified position
+my_list.insert(1, "blueberry")
+print(my_list)
+
+# create list with repeated elements
+list_with_zeros = [0] * 5
+print(list_with_zeros)
+
+# convert string to list
+string_to_list = list('Hello')
+print(string_to_list)
+
+list_org = ["banana", "cherry", "apple"]
+
+# this just copies the reference to the list, so be careful
+list_copy = list_org
+
+# now modifying the copy also affects the original
+list_copy.append(True)
+print(list_copy)
+print(list_org)
+
+# use copy(), or list(x) to actually copy the list
+# slicing also works: list_copy = list_org[:]
+list_org = ["banana", "cherry", "apple"]
+
+list_copy = list_org.copy()
+# list_copy = list(list_org)
+# list_copy = list_org[:]
+
+# now modifying the copy does not affect the original
+list_copy.append(True)
+print(list_copy)
+print(list_org)
