@@ -64,6 +64,46 @@ print(a[0])
 [1, 2]
 
 
+getsizeof() method calls the __sizeof__() method o the object with an additional garbage collector overhead. Hence the size returned by the getsize() method will be more than that returned by the __sizeof()__ method. 
+For example, the getsizeof() method returns 64 bytes for an empty list and then 8 bytes for every additional element.
+
+whereas sizeof()
+ return 40 bytes for an empty list and then  bytes for every additional element.
+import sys
+my_list = [0, 1, 2, "hello", True]
+my_tuple = (0, 1, 2, "hello", True)
+print(sys.getsizeof(my_list), "bytes")   = 104 bytes( 64 + 8*5 )
+print(sys.getsizeof(my_tuple), "bytes")  = 88 bytes  // tuples consume less space than list.
+
+# compare the execution time of a list vs. tuple creation statement
+#print(timeit.timeit(stmt='',setup='', timer = time.perf.counter, number = 1,global =None))   
+***** Syntax: timeit.timeit(stmt, setup, timer, number)
+
+Parameter:
+
+stmt which is the statement you want to measure; it defaults to ‘pass’.
+setup which is the code that you run before running the stmt; it defaults to ‘pass’. 
+We generally use this to import the required modules for our code.
+timer which is a timeit.Timer object; it usually has a sensible default value so you don’t have to worry about it.
+the number which is the number of executions you’d like to run the stmt.
+
+
+
+
+
+
+
+
+
+
+
+
+import timeit
+print(timeit.timeit(stmt="[0, 1, 2, 3, 4, 5]", number=1000000))
+print(timeit.timeit(stmt="(0, 1, 2, 3, 4, 5)", number=1000000))
+
+0.12474981700000853
+0.014836141000017733
 
 
 
