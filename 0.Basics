@@ -7,3 +7,4 @@ there are 5 tyoes of datatypes in pyhton
 
 List = [] mutable
 Tuples = () immutable
+Dictionary = {"str":"str"} / = dict(__ = "str")
