@@ -40,3 +40,36 @@ csv_file_path = 'selected_elements.csv'
 selected_df.to_csv(csv_file_path, index=False)
 
 print(f'Selected elements have been written to {csv_file_path}')
+
+
+
+
+
+
+
+
+
+import pandas as pd
+
+# Sample list of tuples
+data = [("ac_rfg", "tfgg", 56),
+        ["ac_rgy", "tfgg", 67]]
+
+# Create a DataFrame from the list of tuples
+df = pd.DataFrame(data, columns=['Tuple1', 'Tuple2', 'Number'])
+
+# Extract specific substrings from Tuple1 and Tuple2
+df['Extracted1'] = df['Tuple1'].apply(lambda x: (x[:2], x[3:6], df.loc[df['Tuple1'] == x, 'Number'].values[0]))
+df['Extracted2'] = df['Tuple2'].apply(lambda x: (x[:2], x[3:6], df.loc[df['Tuple2'] == x, 'Number'].values[0]))
+
+# Create a new DataFrame with the extracted elements
+extracted_df = pd.DataFrame(df[['Extracted1', 'Extracted2']].values.tolist(), columns=['Extracted1', 'Extracted2'])
+
+# Specify the CSV file path
+csv_file_path = 'extracted_elements.csv'
+
+# Write the new DataFrame to a CSV file
+extracted_df.to_csv(csv_file_path, index=False)
+
+print(f'Extracted elements have been written to {csv_file_path}')
+
