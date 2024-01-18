@@ -16,3 +16,27 @@ csv_file_path = 'output_pandas.csv'
 df.to_csv(csv_file_path, index=False)
 
 print(f'Data exported to {csv_file_path}')
+
+import pandas as pd
+
+# Sample list of tuples
+data = [(1, 'Alice', 25),
+        (2, 'Bob', 30),
+        (3, 'Charlie', 22)]
+
+# Create a DataFrame from the list of tuples
+df = pd.DataFrame(data, columns=['ID', 'Name', 'Age'])
+
+# Select only the first and third elements from each tuple
+selected_elements = df.apply(lambda row: (row['ID'], row['Age']), axis=1)
+
+# Create a new DataFrame with the selected elements
+selected_df = pd.DataFrame(selected_elements.tolist(), columns=['Selected_ID', 'Selected_Age'])
+
+# Specify the CSV file path
+csv_file_path = 'selected_elements.csv'
+
+# Write the new DataFrame to a CSV file
+selected_df.to_csv(csv_file_path, index=False)
+
+print(f'Selected elements have been written to {csv_file_path}')
