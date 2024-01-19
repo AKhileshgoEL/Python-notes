@@ -77,7 +77,30 @@ print(f'Extracted elements have been written to {csv_file_path}')
 
 
 
-SELECT 
+import pandas as pd
+
+# Given data
+data = [['abc_200505050000404', 'aman', '256', '45,7%'],
+        ['abc_200505050000404', 'aman', '257', '45,7%']]
+
+# Create a DataFrame from the given data
+df = pd.DataFrame(data, columns=['col1', 'col2', 'col3', 'col4'])
+
+# Split col1 into two separate columns, 'name' and 'date'
+df[['name', 'date']] = df['col1'].str.extract(r'([a-zA-Z]+)_(\d{8})')
+
+# Convert 'date' column to datetime format
+df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
+
+# Select columns for the final result
+result_df = df[['name', 'date', 'col3']]
+
+# Rename columns for consistency
+result_df.columns = ['name', 'date', 'value']
+
+# Display the final result
+print(result_df)
+
     SUBSTR(code, 1, 3) AS shortened_code,
     CAST(SUBSTR(code, 5, 8) AS INTEGER) AS date_value,
     value
