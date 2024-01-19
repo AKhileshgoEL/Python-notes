@@ -73,3 +73,12 @@ extracted_df.to_csv(csv_file_path, index=False)
 
 print(f'Extracted elements have been written to {csv_file_path}')
 
+
+
+
+
+SELECT 
+    SUBSTR(code, 1, 3) AS shortened_code,
+    CAST(SUBSTR(code, 5, 8) AS INTEGER) AS date_value,
+    value
+FROM your_table;
