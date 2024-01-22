@@ -105,3 +105,40 @@ print(result_df)
     CAST(SUBSTR(code, 5, 8) AS INTEGER) AS date_value,
     value
 FROM your_table;
+
+
+import pandas as pd
+
+data = [['abc_200505050000404_ak', 'aman', '256', '45,7%', 67],
+        ['abc_200505050000404_ak', 'aman', '257', '45,7%', 89]]
+
+# Convert the data to a pandas DataFrame
+df = pd.DataFrame(data, columns=['col1', 'col2', 'col3', 'col4', 'col5'])
+
+# Extract the required information from the 'col1' column
+df['col1'] = df['col1'].str.extract(r'([a-z]+)_(\d{8})\d{6}_\w+')
+
+# Convert the 'col4' column to a numeric format
+df['col4'] = df['col4'].str.replace(',', '.').str.rstrip('%').astype(float) / 100
+
+# Select the desired columns
+result_df = df[['col1', 'col2', 'col3']]
+
+# Display the result
+print(result_df)
+
+
+
+
+
+import pandas as pd
+
+# Your DataFrame (replace this with your actual DataFrame)
+data = {'col1': ['abc', 'def', 'ghi'],
+        'col2': [123, 456, 789],
+        'col3': ['20220101', '20220102', '20220103']}
+
+df = pd.DataFrame(data)
+
+# Save the DataFrame to a CSV file
+df.to_csv('output_file.csv', index=False)
