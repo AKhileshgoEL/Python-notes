@@ -1,144 +1,30 @@
-import pandas as pd
+import os
+import datetime
+from pathlib import Path
 
-# Create a DataFrame with sample data
-data = {'id': [1, 2, 3],
-        'name': ['John Doe', 'Jane Smith', 'Bob Johnson'],
-        'age': [25, 30, 22]}
+def delete_old_files(directory_path, file_pattern, days_to_keep):
+    today = datetime.datetime.now()
+    threshold_date = today - datetime.timedelta(days=days_to_keep)
 
-df = pd.DataFrame(data)
+    # Get a list of all files in the directory matching the specified pattern
+    selected_files = Path(directory_path).glob(file_pattern)
 
-# Print the DataFrame
-print("Original DataFrame:")
-print(df)
+    for file_path in selected_files:
+        # Get the file's creation time
+        creation_time = datetime.datetime.fromtimestamp(os.path.getctime(file_path))
 
-# Save the DataFrame to a CSV file
-csv_file_path = 'output_pandas.csv'
-df.to_csv(csv_file_path, index=False)
+        # Check if the file is older than the specified threshold date
+        if creation_time < threshold_date:
+            try:
+                # Delete the file
+                os.remove(file_path)
+                print(f"Deleted: {file_path}")
+            except Exception as e:
+                print(f"Error deleting {file_path}: {e}")
 
-print(f'Data exported to {csv_file_path}')
+# Example usage
+directory_path = '/path/to/directory'
+file_pattern = '*.txt'
+days_to_keep = 5
 
-import pandas as pd
-
-# Sample list of tuples
-data = [(1, 'Alice', 25),
-        (2, 'Bob', 30),
-        (3, 'Charlie', 22)]
-
-# Create a DataFrame from the list of tuples
-df = pd.DataFrame(data, columns=['ID', 'Name', 'Age'])
-
-# Select only the first and third elements from each tuple
-selected_elements = df.apply(lambda row: (row['ID'], row['Age']), axis=1)
-
-# Create a new DataFrame with the selected elements
-selected_df = pd.DataFrame(selected_elements.tolist(), columns=['Selected_ID', 'Selected_Age'])
-
-# Specify the CSV file path
-csv_file_path = 'selected_elements.csv'
-
-# Write the new DataFrame to a CSV file
-selected_df.to_csv(csv_file_path, index=False)
-
-print(f'Selected elements have been written to {csv_file_path}')
-
-
-
-
-
-
-
-
-
-import pandas as pd
-
-# Sample list of tuples
-data = [("ac_rfg", "tfgg", 56),
-        ["ac_rgy", "tfgg", 67]]
-
-# Create a DataFrame from the list of tuples
-df = pd.DataFrame(data, columns=['Tuple1', 'Tuple2', 'Number'])
-
-# Extract specific substrings from Tuple1 and Tuple2
-df['Extracted1'] = df['Tuple1'].apply(lambda x: (x[:2], x[3:6], df.loc[df['Tuple1'] == x, 'Number'].values[0]))
-df['Extracted2'] = df['Tuple2'].apply(lambda x: (x[:2], x[3:6], df.loc[df['Tuple2'] == x, 'Number'].values[0]))
-
-# Create a new DataFrame with the extracted elements
-extracted_df = pd.DataFrame(df[['Extracted1', 'Extracted2']].values.tolist(), columns=['Extracted1', 'Extracted2'])
-
-# Specify the CSV file path
-csv_file_path = 'extracted_elements.csv'
-
-# Write the new DataFrame to a CSV file
-extracted_df.to_csv(csv_file_path, index=False)
-
-print(f'Extracted elements have been written to {csv_file_path}')
-
-
-
-
-
-import pandas as pd
-
-# Given data
-data = [['abc_200505050000404', 'aman', '256', '45,7%'],
-        ['abc_200505050000404', 'aman', '257', '45,7%']]
-
-# Create a DataFrame from the given data
-df = pd.DataFrame(data, columns=['col1', 'col2', 'col3', 'col4'])
-
-# Split col1 into two separate columns, 'name' and 'date'
-df[['name', 'date']] = df['col1'].str.extract(r'([a-zA-Z]+)_(\d{8})')
-
-# Convert 'date' column to datetime format
-df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
-
-# Select columns for the final result
-result_df = df[['name', 'date', 'col3']]
-
-# Rename columns for consistency
-result_df.columns = ['name', 'date', 'value']
-
-# Display the final result
-print(result_df)
-
-    SUBSTR(code, 1, 3) AS shortened_code,
-    CAST(SUBSTR(code, 5, 8) AS INTEGER) AS date_value,
-    value
-FROM your_table;
-
-
-import pandas as pd
-
-data = [['abc_200505050000404_ak', 'aman', '256', '45,7%', 67],
-        ['abc_200505050000404_ak', 'aman', '257', '45,7%', 89]]
-
-# Convert the data to a pandas DataFrame
-df = pd.DataFrame(data, columns=['col1', 'col2', 'col3', 'col4', 'col5'])
-
-# Extract the required information from the 'col1' column
-df['col1'] = df['col1'].str.extract(r'([a-z]+)_(\d{8})\d{6}_\w+')
-
-# Convert the 'col4' column to a numeric format
-df['col4'] = df['col4'].str.replace(',', '.').str.rstrip('%').astype(float) / 100
-
-# Select the desired columns
-result_df = df[['col1', 'col2', 'col3']]
-
-# Display the result
-print(result_df)
-
-
-
-
-
-import pandas as pd
-
-# Your DataFrame (replace this with your actual DataFrame)
-data = {'col1': ['abc', 'def', 'ghi'],
-        'col2': [123, 456, 789],
-        'col3': ['20220101', '20220102', '20220103']}
-
-df = pd.DataFrame(data)
-
-# Save the DataFrame to a CSV file
-df.to_csv('output_file.csv', index=False)
+delete_old_files(directory_path, file_pattern, days_to_keep)
